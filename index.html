@@ -263,12 +263,9 @@
       text-transform: uppercase; letter-spacing: 1px;
       margin-bottom: 12px;
     }
-    .about-review-placeholder {
-      width: 100%; min-height: 120px;
-      background: var(--bg-gray);
+    .about-review img {
+      width: 100%;
       border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--text-sub); font-size: 14px;
     }
 
     /* ===== PROCESS ===== */
@@ -614,7 +611,7 @@
           </div>
           <div class="about-review">
             <div class="about-review-label">실제 코칭 후기</div>
-            <div class="about-review-placeholder">카톡 후기 캡쳐 이미지</div>
+            <img src="카톡후기.png" alt="실제 코칭 후기 캡쳐" style="width:100%; border-radius:8px;">
           </div>
         </div>
       </div>
@@ -699,19 +696,19 @@
         <form id="applyForm">
           <div class="form-group">
             <label>이름</label>
-            <input type="text" placeholder="홍길동" required>
+            <input type="text" name="name" placeholder="홍길동" required>
           </div>
           <div class="form-group">
             <label>연락처 (카카오톡 ID 또는 전화번호)</label>
-            <input type="text" placeholder="카카오톡 ID 또는 010-0000-0000" required>
+            <input type="text" name="contact" placeholder="카카오톡 ID 또는 010-0000-0000" required>
           </div>
           <div class="form-group">
             <label>현재 직무 / 경력 연차</label>
-            <input type="text" placeholder="예: 마케팅 5년차 / 개발 3년차">
+            <input type="text" name="job" placeholder="예: 마케팅 5년차 / 개발 3년차">
           </div>
           <div class="form-group">
             <label>지금 가장 큰 고민 한 줄</label>
-            <textarea placeholder="예: 이직해야 할지, 더 버텨야 할지 모르겠습니다"></textarea>
+            <textarea name="concern" placeholder="예: 이직해야 할지, 더 버텨야 할지 모르겠습니다"></textarea>
           </div>
           <button type="submit" class="form-submit">신청하기</button>
         </form>
@@ -770,7 +767,18 @@
   <script>
     document.getElementById('applyForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      this.style.display = 'none';
+      var form = this;
+      var data = {
+        name: form.querySelector('[name="name"]').value,
+        contact: form.querySelector('[name="contact"]').value,
+        job: form.querySelector('[name="job"]').value,
+        concern: form.querySelector('[name="concern"]').value
+      };
+      fetch('https://script.google.com/macros/s/AKfycbw6cyACiY8CDG9dS5y2RTBXqBqtaIzeA8oq1OazfQ1bvN2dhSanXOSIC-sD5CcN7KzJNw/exec', {
+        method: 'POST',
+        body: JSON.stringify(data)
+      });
+      form.style.display = 'none';
       document.getElementById('formThanks').classList.add('show');
     });
   </script>
