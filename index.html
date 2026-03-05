@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>리커리어 — 당신의 다음 스텝을 함께 설계합니다</title>
-  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-DPK86SPC8B"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -14,21 +13,27 @@
   </script>
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --navy: #1B2A4A;
+      --navy: #0D1B2A;
+      --navy-mid: #1B2A4A;
       --navy-light: #2A3F6A;
       --coral: #FF6B35;
+      --coral-glow: rgba(255,107,53,0.3);
       --coral-hover: #E55A2B;
+      --gold: #F4C542;
       --bg-white: #FFFFFF;
-      --bg-gray: #F8F9FA;
-      --bg-warm: #FFF8F5;
-      --bg-dark: #0F1923;
+      --bg-gray: #F5F6F8;
+      --bg-warm: #FFFAF7;
+      --bg-dark: #080E16;
       --text-main: #1A1A1A;
       --text-sub: #6B7280;
       --text-light: #9CA3AF;
+      --glass: rgba(255,255,255,0.06);
+      --glass-border: rgba(255,255,255,0.08);
     }
 
     html { scroll-behavior: smooth; }
@@ -38,174 +43,313 @@
       color: var(--text-main);
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
+
+    .serif { font-family: 'Noto Serif KR', serif; }
 
     /* ===== NAV ===== */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(0,0,0,0.06);
-      padding: 16px 0;
+      background: rgba(13,27,42,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 14px 0;
+      transition: all 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(13,27,42,0.95);
+      box-shadow: 0 4px 30px rgba(0,0,0,0.3);
     }
     .nav-inner {
-      max-width: 1080px; margin: 0 auto; padding: 0 24px;
+      max-width: 1100px; margin: 0 auto; padding: 0 28px;
       display: flex; justify-content: space-between; align-items: center;
     }
     .nav-logo {
-      font-size: 18px; font-weight: 700; color: var(--navy);
+      font-size: 20px; font-weight: 800; color: #fff;
       text-decoration: none; letter-spacing: -0.5px;
     }
+    .nav-logo span { color: var(--coral); }
     .nav-cta {
       background: var(--coral); color: #fff;
-      padding: 10px 20px; border-radius: 8px;
-      text-decoration: none; font-size: 14px; font-weight: 600;
-      transition: background 0.2s;
+      padding: 10px 24px; border-radius: 50px;
+      text-decoration: none; font-size: 14px; font-weight: 700;
+      transition: all 0.3s;
+      box-shadow: 0 2px 12px var(--coral-glow);
     }
-    .nav-cta:hover { background: var(--coral-hover); }
+    .nav-cta:hover {
+      background: var(--coral-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px var(--coral-glow);
+    }
 
     /* ===== HERO ===== */
     .hero {
-      background: linear-gradient(135deg, var(--navy) 0%, #1E3A5F 25%, var(--navy-light) 50%, #1B2A4A 75%, var(--navy) 100%);
-      background-size: 300% 300%;
-      animation: heroGradient 12s ease infinite;
+      background: var(--navy);
       color: #fff;
-      padding: 140px 24px 100px;
+      padding: 160px 28px 120px;
       position: relative;
       overflow: hidden;
     }
-    .hero::before {
-      content: '';
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 40%, rgba(42,63,106,0.6) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 80% 30%, rgba(255,107,53,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 50% 80%, rgba(42,63,106,0.3) 0%, transparent 60%);
+      animation: heroBgShift 20s ease-in-out infinite alternate;
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 70%);
+    }
+    .hero-particles {
+      position: absolute; inset: 0; pointer-events: none;
+    }
+    .particle {
       position: absolute;
-      top: -50%; left: -50%;
-      width: 200%; height: 200%;
-      background: radial-gradient(circle at 30% 50%, rgba(255,107,53,0.06) 0%, transparent 50%);
-      pointer-events: none;
+      width: 3px; height: 3px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 50%;
+      animation: particleFloat 8s ease-in-out infinite;
     }
+    .particle:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; animation-duration: 7s; }
+    .particle:nth-child(2) { top: 60%; left: 25%; animation-delay: 1s; animation-duration: 9s; }
+    .particle:nth-child(3) { top: 30%; left: 50%; animation-delay: 2s; animation-duration: 6s; }
+    .particle:nth-child(4) { top: 70%; left: 70%; animation-delay: 3s; animation-duration: 8s; }
+    .particle:nth-child(5) { top: 15%; left: 85%; animation-delay: 0.5s; animation-duration: 10s; }
+    .particle:nth-child(6) { top: 80%; left: 40%; animation-delay: 1.5s; animation-duration: 7s; }
+    .particle:nth-child(7) { top: 45%; left: 90%; animation-delay: 2.5s; animation-duration: 9s; }
+    .particle:nth-child(8) { top: 55%; left: 5%; animation-delay: 4s; animation-duration: 6s; }
+
     .hero-inner {
-      max-width: 900px; margin: 0 auto;
-      display: flex; align-items: center; gap: 48px;
+      max-width: 1000px; margin: 0 auto;
+      display: flex; align-items: center; gap: 60px;
+      position: relative; z-index: 2;
     }
-    .hero-text {
-      flex: 1;
-      animation: fadeUp 0.8s ease both;
-    }
+    .hero-text { flex: 1; }
     .hero-badge {
-      display: inline-block;
-      background: rgba(255,255,255,0.12);
-      padding: 6px 16px; border-radius: 20px;
-      font-size: 14px; color: rgba(255,255,255,0.8);
-      margin-bottom: 24px; letter-spacing: -0.3px;
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 8px 18px; border-radius: 50px;
+      font-size: 13px; color: rgba(255,255,255,0.7);
+      margin-bottom: 28px; backdrop-filter: blur(10px);
+    }
+    .hero-badge .dot {
+      width: 6px; height: 6px;
+      background: var(--coral);
+      border-radius: 50%;
+      animation: dotPulse 2s ease-in-out infinite;
     }
     .hero h1 {
-      font-size: 38px; font-weight: 800; line-height: 1.35;
-      letter-spacing: -1.5px; margin-bottom: 16px;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 46px; font-weight: 900; line-height: 1.3;
+      letter-spacing: -2px; margin-bottom: 20px;
+    }
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, var(--coral), #FF8F65);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
     .hero-sub {
-      font-size: 18px; color: rgba(255,255,255,0.85);
-      line-height: 1.7; margin-bottom: 8px; font-weight: 500;
+      font-size: 18px; color: rgba(255,255,255,0.7);
+      line-height: 1.8; margin-bottom: 12px;
     }
     .hero-promise {
-      font-size: 16px; color: rgba(255,255,255,0.6);
-      line-height: 1.7; margin-bottom: 32px;
+      font-size: 15px; color: rgba(255,255,255,0.45);
+      line-height: 1.7; margin-bottom: 36px;
+    }
+    .hero-cta-group {
+      display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
     }
     .hero-photo {
-      flex-shrink: 0;
-      width: 200px; height: 200px;
+      flex-shrink: 0; position: relative;
+    }
+    .hero-photo-ring {
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      padding: 4px;
+      background: linear-gradient(135deg, var(--coral), var(--navy-light), var(--coral));
+      background-size: 200% 200%;
+      animation: ringRotate 6s ease-in-out infinite;
+    }
+    .hero-photo-inner {
+      width: 100%; height: 100%;
       border-radius: 50%;
       overflow: hidden;
-      border: 4px solid rgba(255,255,255,0.15);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-      animation: fadeUp 0.8s ease 0.3s both, photoFloat 4s ease-in-out 1.5s infinite;
+      background: var(--navy);
     }
-    .hero-photo img {
+    .hero-photo-inner img {
       width: 100%; height: 100%; object-fit: cover;
     }
+    .hero-photo-float {
+      position: absolute;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.8);
+      white-space: nowrap;
+    }
+    .hero-photo-float.f1 {
+      top: -10px; right: -30px;
+      animation: floatTag 4s ease-in-out infinite;
+    }
+    .hero-photo-float.f2 {
+      bottom: 10px; left: -40px;
+      animation: floatTag 4s ease-in-out 1s infinite;
+    }
+
+    /* ===== CTA BUTTONS ===== */
     .cta-btn {
-      display: inline-block;
-      background: var(--coral); color: #fff;
-      padding: 18px 40px; border-radius: 10px;
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, var(--coral), #FF8F65);
+      color: #fff;
+      padding: 18px 40px; border-radius: 50px;
       font-size: 17px; font-weight: 700;
       text-decoration: none;
-      transition: all 0.25s;
-      box-shadow: 0 4px 20px rgba(255,107,53,0.4);
-      animation: pulse 2.5s ease-in-out infinite;
+      transition: all 0.3s;
+      box-shadow: 0 4px 24px var(--coral-glow);
+      position: relative;
+      overflow: hidden;
     }
+    .cta-btn::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, transparent, rgba(255,255,255,0.2), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s;
+    }
+    .cta-btn:hover::before { transform: translateX(100%); }
     .cta-btn:hover {
-      background: var(--coral-hover);
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 8px 28px rgba(255,107,53,0.55);
-      animation: none;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(255,107,53,0.5);
     }
-    .cta-btn-sm {
-      padding: 14px 32px; font-size: 15px;
+    .cta-btn-sm { padding: 14px 32px; font-size: 15px; }
+    .cta-btn-ghost {
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.8);
+      box-shadow: none;
+      padding: 16px 32px; font-size: 15px;
+    }
+    .cta-btn-ghost::before { display: none; }
+    .cta-btn-ghost:hover {
+      border-color: rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.05);
+      box-shadow: none;
+      transform: translateY(-2px);
+    }
+    .cta-btn-dark {
+      background: var(--navy);
+      box-shadow: 0 4px 24px rgba(13,27,42,0.3);
+    }
+    .cta-btn-dark:hover {
+      box-shadow: 0 8px 32px rgba(13,27,42,0.4);
     }
     .cta-btn-outline {
       background: transparent;
       border: 2px solid var(--coral);
       color: var(--coral);
       box-shadow: none;
-      animation: none;
     }
+    .cta-btn-outline::before { display: none; }
     .cta-btn-outline:hover {
       background: var(--coral);
       color: #fff;
-      box-shadow: 0 4px 20px rgba(255,107,53,0.4);
+      box-shadow: 0 4px 24px var(--coral-glow);
+    }
+
+    /* ===== STATS BAR ===== */
+    .stats-bar {
+      background: var(--bg-dark);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 28px 28px;
+    }
+    .stats-inner {
+      max-width: 800px; margin: 0 auto;
+      display: flex; justify-content: center; gap: 60px;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 32px; font-weight: 900;
+      color: var(--coral);
+      letter-spacing: -1px;
+    }
+    .stat-label {
+      font-size: 13px; color: rgba(255,255,255,0.4);
+      margin-top: 4px;
     }
 
     /* ===== SECTIONS COMMON ===== */
-    section { padding: 100px 24px; }
-    .section-compact { padding: 72px 24px; }
-    .section-inner { max-width: 800px; margin: 0 auto; }
+    section { padding: 100px 28px; }
+    .section-compact { padding: 72px 28px; }
+    .section-inner { max-width: 840px; margin: 0 auto; }
     .section-label {
-      font-size: 14px; font-weight: 600; color: var(--coral);
-      text-transform: uppercase; letter-spacing: 1px;
-      margin-bottom: 12px;
+      font-size: 13px; font-weight: 700; color: var(--coral);
+      text-transform: uppercase; letter-spacing: 2px;
+      margin-bottom: 14px;
     }
     .section-title {
-      font-size: 32px; font-weight: 800; line-height: 1.35;
-      letter-spacing: -1px; margin-bottom: 16px; color: var(--navy);
+      font-family: 'Noto Serif KR', serif;
+      font-size: 34px; font-weight: 900; line-height: 1.35;
+      letter-spacing: -1.5px; margin-bottom: 16px; color: var(--navy);
     }
     .section-desc {
       font-size: 17px; color: var(--text-sub); line-height: 1.7;
       margin-bottom: 48px;
     }
-    .section-cta {
-      margin-top: 48px;
-      text-align: center;
-    }
+    .section-cta { margin-top: 48px; text-align: center; }
 
     /* ===== PAIN ===== */
     .pain { background: var(--bg-gray); }
     .pain-list { list-style: none; }
     .pain-list li {
       background: #fff;
-      padding: 20px 24px;
-      border-radius: 12px;
+      padding: 22px 28px;
+      border-radius: 14px;
       margin-bottom: 12px;
       font-size: 17px;
       line-height: 1.6;
       border-left: 4px solid var(--coral);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      transition: all 0.3s;
     }
     .pain-list li:hover {
-      transform: translateX(6px);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      transform: translateX(8px);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+      border-left-color: var(--coral);
     }
     .pain-bottom {
       margin-top: 40px;
-      padding: 28px;
+      padding: 32px;
       background: var(--navy);
       color: #fff;
-      border-radius: 12px;
+      border-radius: 16px;
       text-align: center;
       font-size: 17px;
-      line-height: 1.7;
+      line-height: 1.8;
+      position: relative;
+      overflow: hidden;
+    }
+    .pain-bottom::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--coral), #FF8F65, var(--coral));
     }
     .pain-bottom strong { color: var(--coral); }
 
-    /* ===== AFTER (변화 섹션) ===== */
+    /* ===== AFTER ===== */
     .after { background: var(--bg-warm); }
     .after-grid {
       display: grid;
@@ -213,42 +357,40 @@
       gap: 24px;
     }
     .after-card {
-      padding: 28px 24px;
-      border-radius: 16px;
+      padding: 32px 28px;
+      border-radius: 20px;
       font-size: 16px;
       line-height: 1.7;
+      transition: transform 0.3s;
     }
+    .after-card:hover { transform: translateY(-4px); }
     .after-card.before-card {
       background: #fff;
       border: 1px solid #E5E7EB;
       color: var(--text-sub);
     }
-    .after-card.after-card-highlight {
-      background: var(--navy);
+    .after-card.after-highlight {
+      background: linear-gradient(135deg, var(--navy), var(--navy-mid));
       color: #fff;
+      box-shadow: 0 8px 32px rgba(13,27,42,0.2);
     }
     .after-card h4 {
-      font-size: 14px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 16px;
+      font-size: 13px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 2px;
+      margin-bottom: 20px;
     }
     .after-card.before-card h4 { color: var(--text-light); }
-    .after-card.after-card-highlight h4 { color: var(--coral); }
-    .after-card ul {
-      list-style: none;
-    }
+    .after-card.after-highlight h4 { color: var(--coral); }
+    .after-card ul { list-style: none; }
     .after-card ul li {
-      padding: 6px 0;
-      padding-left: 24px;
+      padding: 8px 0; padding-left: 28px;
       position: relative;
     }
     .after-card.before-card ul li::before {
       content: '✕'; position: absolute; left: 0;
-      color: #D1D5DB; font-weight: 700;
+      color: #D1D5DB; font-weight: 700; font-size: 14px;
     }
-    .after-card.after-card-highlight ul li::before {
+    .after-card.after-highlight ul li::before {
       content: '→'; position: absolute; left: 0;
       color: var(--coral); font-weight: 700;
     }
@@ -258,142 +400,181 @@
     .steps-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 28px;
+      gap: 24px;
     }
     .step-card {
       background: var(--bg-gray);
-      padding: 36px 28px;
-      border-radius: 16px;
+      padding: 40px 28px;
+      border-radius: 20px;
       text-align: center;
-      transition: transform 0.3s, box-shadow 0.3s;
+      transition: all 0.4s;
+      position: relative;
+      overflow: hidden;
+    }
+    .step-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px; background: var(--coral);
+      transform: scaleX(0);
+      transition: transform 0.4s;
     }
     .step-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+      transform: translateY(-8px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.1);
+      background: #fff;
     }
+    .step-card:hover::after { transform: scaleX(1); }
     .step-num {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 48px; height: 48px;
-      background: var(--navy); color: #fff;
-      border-radius: 50%;
+      width: 52px; height: 52px;
+      background: linear-gradient(135deg, var(--navy), var(--navy-light));
+      color: #fff;
+      border-radius: 16px;
       font-size: 20px; font-weight: 800;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
     .step-card h3 {
-      font-size: 20px; font-weight: 700; margin-bottom: 12px;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 22px; font-weight: 700; margin-bottom: 14px;
       color: var(--navy);
     }
     .step-card p {
-      font-size: 15px; color: var(--text-sub); line-height: 1.65;
+      font-size: 15px; color: var(--text-sub); line-height: 1.7;
     }
 
     /* ===== ABOUT ===== */
-    .about { background: var(--bg-gray); padding: 100px 24px; }
+    .about { background: var(--bg-gray); padding: 100px 28px; }
     .about-content {
       display: grid;
       grid-template-columns: 1fr 1.8fr;
       gap: 48px;
       align-items: start;
     }
-    .about-left { text-align: center; }
+    .about-left { text-align: center; position: sticky; top: 100px; }
     .about-photo {
       width: 180px; height: 180px;
-      border-radius: 50%;
-      overflow: hidden;
-      margin: 0 auto 16px;
-      border: 3px solid var(--navy);
+      border-radius: 50%; overflow: hidden;
+      margin: 0 auto 20px;
+      padding: 3px;
+      background: linear-gradient(135deg, var(--coral), var(--navy));
     }
-    .about-photo img {
+    .about-photo-inner {
+      width: 100%; height: 100%;
+      border-radius: 50%; overflow: hidden;
+    }
+    .about-photo-inner img {
       width: 100%; height: 100%; object-fit: cover;
     }
     .about-name {
-      font-size: 18px; font-weight: 700; color: var(--navy);
+      font-family: 'Noto Serif KR', serif;
+      font-size: 20px; font-weight: 700; color: var(--navy);
       margin-bottom: 4px;
     }
     .about-role {
       font-size: 14px; color: var(--text-sub);
     }
     .about-story {
-      font-size: 16px; line-height: 1.8; color: var(--text-main);
+      font-size: 16px; line-height: 2; color: var(--text-main);
       margin-bottom: 28px;
     }
     .about-list { list-style: none; margin-bottom: 28px; }
     .about-list li {
-      font-size: 15px; padding: 6px 0;
-      padding-left: 24px;
+      font-size: 15px; padding: 8px 0;
+      padding-left: 28px;
       position: relative;
       color: var(--text-sub);
     }
     .about-list li::before {
       content: '✓'; position: absolute; left: 0;
-      color: var(--coral); font-weight: 700;
+      color: var(--coral); font-weight: 700; font-size: 16px;
     }
     .about-cases {
       background: #fff;
-      padding: 20px 24px;
-      border-radius: 12px;
+      padding: 24px 28px;
+      border-radius: 16px;
       font-size: 15px;
       color: var(--navy);
-      line-height: 1.7;
+      line-height: 1.8;
       margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
     .about-cases strong { color: var(--coral); }
     .about-quote {
       background: #fff;
-      padding: 24px;
-      border-radius: 12px;
-      font-size: 16px;
+      padding: 28px;
+      border-radius: 16px;
+      font-size: 17px;
       color: var(--navy);
       font-style: italic;
-      line-height: 1.7;
+      line-height: 1.8;
       border-left: 4px solid var(--coral);
       margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
     .about-review {
       background: #fff;
-      padding: 20px 24px;
-      border-radius: 12px;
+      padding: 24px;
+      border-radius: 16px;
       border: 1px solid #E5E7EB;
     }
     .about-review-label {
       font-size: 12px; color: var(--text-light);
-      text-transform: uppercase; letter-spacing: 1px;
-      margin-bottom: 12px;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 14px; font-weight: 700;
     }
     .about-review img {
-      width: 65%;
-      border-radius: 8px;
-      display: block;
-      margin: 0 auto;
+      width: 65%; border-radius: 12px;
+      display: block; margin: 0 auto;
     }
 
     /* ===== PROCESS ===== */
-    .process { background: var(--bg-white); }
+    .process {
+      background: var(--navy);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .process::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(42,63,106,0.3), transparent);
+    }
+    .process .section-inner { position: relative; z-index: 2; }
+    .process .section-label { color: var(--coral); }
+    .process .section-title { color: #fff; }
     .process-steps {
-      display: flex; gap: 20px; justify-content: center;
+      display: flex; gap: 0; justify-content: center;
+      position: relative;
+    }
+    .process-line {
+      position: absolute;
+      top: 40px;
+      left: 15%;
+      right: 15%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--coral), rgba(255,107,53,0.2));
     }
     .process-step {
       flex: 1; max-width: 240px;
-      text-align: center; padding: 28px 20px;
+      text-align: center; padding: 0 20px;
+      position: relative;
     }
     .process-icon {
-      width: 56px; height: 56px;
-      background: var(--bg-gray);
+      width: 80px; height: 80px;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
       border-radius: 50%;
       display: inline-flex; align-items: center; justify-content: center;
-      font-size: 24px; margin-bottom: 16px;
+      font-size: 28px; margin-bottom: 20px;
+      font-weight: 800; color: var(--coral);
+      position: relative; z-index: 2;
     }
     .process-step h4 {
-      font-size: 16px; font-weight: 700; margin-bottom: 8px;
-      color: var(--navy);
+      font-size: 17px; font-weight: 700; margin-bottom: 8px;
     }
     .process-step p {
-      font-size: 14px; color: var(--text-sub);
-    }
-    .process-arrow {
-      display: flex; align-items: center;
-      color: var(--text-light); font-size: 24px;
-      padding-top: 20px;
+      font-size: 14px; color: rgba(255,255,255,0.5);
     }
 
     /* ===== PRICING ===== */
@@ -406,157 +587,175 @@
     }
     .price-card {
       background: #fff;
-      border-radius: 16px;
-      padding: 36px 28px;
+      border-radius: 20px;
+      padding: 40px 32px;
       position: relative;
       border: 2px solid transparent;
-      transition: transform 0.3s, box-shadow 0.3s;
+      transition: all 0.4s;
     }
     .price-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.1);
     }
     .price-card.popular {
       border-color: var(--coral);
-      box-shadow: 0 8px 32px rgba(255,107,53,0.12);
-      transform: scale(1.02);
-      animation: glowBorder 3s ease-in-out infinite;
+      box-shadow: 0 8px 40px rgba(255,107,53,0.15);
+      transform: scale(1.03);
+    }
+    .price-card.popular:hover {
+      transform: scale(1.03) translateY(-6px);
     }
     .price-badge {
-      position: absolute; top: -12px; right: 24px;
-      background: var(--coral); color: #fff;
-      padding: 4px 14px; border-radius: 20px;
-      font-size: 12px; font-weight: 700;
+      position: absolute; top: -14px; right: 24px;
+      background: linear-gradient(135deg, var(--coral), #FF8F65);
+      color: #fff;
+      padding: 6px 18px; border-radius: 50px;
+      font-size: 12px; font-weight: 800;
+      box-shadow: 0 4px 12px var(--coral-glow);
     }
     .price-card h3 {
+      font-family: 'Noto Serif KR', serif;
       font-size: 22px; font-weight: 700; margin-bottom: 8px;
       color: var(--navy);
     }
     .price-card .subtitle {
-      font-size: 14px; color: var(--text-sub); margin-bottom: 24px;
+      font-size: 14px; color: var(--text-sub); margin-bottom: 28px;
     }
     .price-original {
       font-size: 16px; color: var(--text-light);
       text-decoration: line-through; margin-bottom: 4px;
     }
     .price-current {
-      font-size: 36px; font-weight: 800; color: var(--navy);
-      margin-bottom: 4px;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 40px; font-weight: 900; color: var(--navy);
+      margin-bottom: 4px; letter-spacing: -1px;
     }
     .price-note {
-      font-size: 13px; color: var(--coral); font-weight: 600;
-      margin-bottom: 24px;
+      font-size: 13px; color: var(--coral); font-weight: 700;
+      margin-bottom: 28px;
     }
     .price-features { list-style: none; }
     .price-features li {
-      font-size: 15px; padding: 6px 0; padding-left: 20px;
+      font-size: 15px; padding: 8px 0; padding-left: 24px;
       position: relative; color: var(--text-sub);
     }
     .price-features li::before {
-      content: '·'; position: absolute; left: 4px;
-      font-weight: 700; color: var(--navy);
+      content: '✓'; position: absolute; left: 0;
+      font-weight: 700; color: var(--coral);
     }
     .pricing-bottom {
       text-align: center;
-      padding: 20px;
+      padding: 24px;
       background: #fff;
-      border-radius: 12px;
+      border-radius: 16px;
       font-size: 15px;
       color: var(--text-sub);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
     .pricing-bottom strong { color: var(--navy); }
 
     /* ===== GUARANTEE ===== */
-    .guarantee {
-      background: var(--bg-white);
-      padding: 72px 24px;
-    }
+    .guarantee { background: var(--bg-white); padding: 80px 28px; }
     .guarantee-box {
-      max-width: 640px;
+      max-width: 660px;
       margin: 0 auto;
       text-align: center;
-      padding: 48px 40px;
-      background: var(--bg-warm);
-      border-radius: 20px;
-      border: 2px solid rgba(255,107,53,0.15);
+      padding: 56px 48px;
+      background: linear-gradient(135deg, var(--bg-warm), #FFF5EE);
+      border-radius: 24px;
+      border: 2px solid rgba(255,107,53,0.12);
+      position: relative;
+      overflow: hidden;
     }
-    .guarantee-icon {
-      font-size: 48px;
-      margin-bottom: 20px;
+    .guarantee-box::before {
+      content: '';
+      position: absolute; top: -1px; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--coral), #FF8F65);
     }
+    .guarantee-icon { font-size: 48px; margin-bottom: 20px; }
     .guarantee-box h3 {
-      font-size: 24px;
-      font-weight: 800;
-      color: var(--navy);
-      margin-bottom: 16px;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 24px; font-weight: 900;
+      color: var(--navy); margin-bottom: 16px;
     }
     .guarantee-box p {
-      font-size: 16px;
-      color: var(--text-sub);
-      line-height: 1.7;
+      font-size: 16px; color: var(--text-sub); line-height: 1.8;
     }
+    .guarantee-box strong { color: var(--navy); }
 
     /* ===== FORM ===== */
     .form-section {
-      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      background: linear-gradient(135deg, var(--navy) 0%, #0F2137 50%, var(--navy-mid) 100%);
       color: #fff;
-      padding: 100px 24px;
+      padding: 100px 28px;
+      position: relative;
+      overflow: hidden;
     }
+    .form-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 50% 60% at 50% 30%, rgba(255,107,53,0.04), transparent);
+    }
+    .form-section .section-inner { position: relative; z-index: 2; }
     .form-section .section-title { color: #fff; }
-    .form-section .section-desc { color: rgba(255,255,255,0.7); }
+    .form-section .section-desc { color: rgba(255,255,255,0.6); }
     .form-card {
       max-width: 520px; margin: 0 auto;
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 40px 32px;
-      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 44px 36px;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
     }
-    .form-group { margin-bottom: 20px; }
+    .form-group { margin-bottom: 22px; }
     .form-group label {
       display: block; font-size: 14px; font-weight: 600;
-      margin-bottom: 8px; color: rgba(255,255,255,0.9);
+      margin-bottom: 8px; color: rgba(255,255,255,0.85);
     }
     .form-group input,
     .form-group textarea {
       width: 100%;
-      padding: 14px 16px;
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 10px;
+      padding: 15px 18px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
       font-size: 15px;
       font-family: inherit;
-      background: rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.04);
       color: #fff;
-      transition: border-color 0.2s;
+      transition: all 0.3s;
     }
     .form-group input::placeholder,
     .form-group textarea::placeholder {
-      color: rgba(255,255,255,0.35);
+      color: rgba(255,255,255,0.25);
     }
     .form-group input:focus,
     .form-group textarea:focus {
       outline: none;
       border-color: var(--coral);
-      background: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.08);
+      box-shadow: 0 0 0 3px rgba(255,107,53,0.15);
     }
     .form-group textarea { resize: vertical; min-height: 80px; }
     .form-submit {
       width: 100%;
       padding: 18px;
-      background: var(--coral);
+      background: linear-gradient(135deg, var(--coral), #FF8F65);
       color: #fff;
       border: none;
-      border-radius: 10px;
+      border-radius: 50px;
       font-size: 17px;
       font-weight: 700;
       font-family: inherit;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.3s;
       margin-top: 8px;
+      box-shadow: 0 4px 20px var(--coral-glow);
     }
     .form-submit:hover {
-      background: var(--coral-hover);
-      transform: translateY(-1px);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(255,107,53,0.45);
     }
     .form-thanks {
       display: none;
@@ -565,128 +764,153 @@
     }
     .form-thanks.show { display: block; }
     .form-thanks h3 {
+      font-family: 'Noto Serif KR', serif;
       font-size: 24px; font-weight: 700; margin-bottom: 16px;
     }
     .form-thanks p {
-      font-size: 16px; color: rgba(255,255,255,0.7); line-height: 1.7;
+      font-size: 16px; color: rgba(255,255,255,0.6); line-height: 1.8;
     }
 
     /* ===== FAQ ===== */
-    .faq { background: var(--bg-gray); padding: 80px 24px; }
+    .faq { background: var(--bg-gray); padding: 80px 28px; }
     .faq-item {
       background: #fff;
-      border-radius: 12px;
-      padding: 24px 28px;
+      border-radius: 16px;
+      padding: 26px 30px;
       margin-bottom: 12px;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: all 0.3s;
+      border: 1px solid transparent;
     }
     .faq-item:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      border-color: rgba(255,107,53,0.1);
     }
     .faq-q {
       font-size: 16px; font-weight: 700; color: var(--navy);
       margin-bottom: 10px;
     }
     .faq-a {
-      font-size: 15px; color: var(--text-sub); line-height: 1.65;
+      font-size: 15px; color: var(--text-sub); line-height: 1.7;
     }
 
     /* ===== FINAL CTA ===== */
     .final-cta {
       background: var(--bg-white);
       text-align: center;
-      padding: 80px 24px;
+      padding: 100px 28px;
+      position: relative;
     }
     .final-cta .section-title { margin-bottom: 12px; }
     .final-cta p {
       font-size: 17px; color: var(--text-sub);
       margin-bottom: 32px;
     }
-    .final-cta .urgency {
-      display: inline-block;
-      background: var(--bg-warm);
+    .urgency-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, #FFF5EE, #FFEEE4);
       color: var(--coral);
       font-weight: 700;
-      font-size: 15px;
-      padding: 8px 20px;
-      border-radius: 8px;
-      margin-bottom: 24px;
+      font-size: 14px;
+      padding: 10px 24px;
+      border-radius: 50px;
+      margin-bottom: 28px;
+      border: 1px solid rgba(255,107,53,0.15);
+    }
+    .urgency-badge .dot {
+      width: 8px; height: 8px;
+      background: var(--coral);
+      border-radius: 50%;
+      animation: dotPulse 1.5s ease-in-out infinite;
     }
 
     /* ===== FOOTER ===== */
     footer {
       background: var(--bg-dark);
-      color: rgba(255,255,255,0.5);
-      padding: 48px 24px;
+      color: rgba(255,255,255,0.4);
+      padding: 48px 28px;
       text-align: center;
       font-size: 13px;
       line-height: 2;
     }
-    footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
-    footer a:hover { color: #fff; }
+    footer a { color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
+    footer a:hover { color: var(--coral); }
     .footer-brand {
-      font-size: 16px; font-weight: 700;
-      color: rgba(255,255,255,0.8);
+      font-size: 16px; font-weight: 800;
+      color: rgba(255,255,255,0.7);
       margin-bottom: 16px;
+      letter-spacing: -0.5px;
     }
 
     /* ===== ANIMATIONS ===== */
-    @keyframes heroGradient {
-      0% { background-position: 0% 50%; }
+    @keyframes heroBgShift {
+      0% { opacity: 0.8; }
+      100% { opacity: 1; }
+    }
+    @keyframes particleFloat {
+      0%, 100% { transform: translateY(0) translateX(0); opacity: 0.15; }
+      25% { transform: translateY(-20px) translateX(10px); opacity: 0.3; }
+      50% { transform: translateY(-10px) translateX(-5px); opacity: 0.15; }
+      75% { transform: translateY(-30px) translateX(15px); opacity: 0.25; }
+    }
+    @keyframes ringRotate {
+      0%, 100% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
     }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 4px 20px rgba(255,107,53,0.4); }
-      50% { box-shadow: 0 4px 32px rgba(255,107,53,0.65); }
-    }
-    @keyframes glowBorder {
-      0%, 100% { box-shadow: 0 8px 32px rgba(255,107,53,0.12); }
-      50% { box-shadow: 0 8px 40px rgba(255,107,53,0.25); }
-    }
-    @keyframes photoFloat {
-      0%, 100% { transform: translateY(0px); }
+    @keyframes floatTag {
+      0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-8px); }
     }
-
-    .fade-up {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+    @keyframes dotPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.7); }
     }
-    .fade-up.visible {
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 4px 20px var(--coral-glow); }
+      50% { box-shadow: 0 4px 32px rgba(255,107,53,0.55); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
       opacity: 1;
       transform: translateY(0);
     }
-    .fade-up-delay-1 { transition-delay: 0.1s; }
-    .fade-up-delay-2 { transition-delay: 0.2s; }
-    .fade-up-delay-3 { transition-delay: 0.3s; }
+    .reveal-d1 { transition-delay: 0.1s; }
+    .reveal-d2 { transition-delay: 0.2s; }
+    .reveal-d3 { transition-delay: 0.3s; }
+    .reveal-d4 { transition-delay: 0.4s; }
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 768px) {
-      .hero { padding: 120px 20px 70px; }
-      .hero-inner { flex-direction: column-reverse; text-align: center; gap: 24px; }
-      .hero-photo { width: 140px; height: 140px; }
-      .hero h1 { font-size: 28px; }
+      .hero { padding: 130px 20px 80px; }
+      .hero-inner { flex-direction: column-reverse; text-align: center; gap: 28px; }
+      .hero-photo-ring { width: 160px; height: 160px; }
+      .hero-photo-float { display: none; }
+      .hero h1 { font-size: 30px; letter-spacing: -1px; }
       .hero-sub { font-size: 16px; }
-      section { padding: 64px 20px; }
-      .section-compact { padding: 48px 20px; }
-      .section-title { font-size: 24px; }
+      .hero-cta-group { justify-content: center; }
+      section { padding: 72px 20px; }
+      .section-compact { padding: 56px 20px; }
+      .section-title { font-size: 26px; }
+      .stats-inner { gap: 32px; }
+      .stat-num { font-size: 24px; }
       .steps-grid { grid-template-columns: 1fr; }
       .about-content { grid-template-columns: 1fr; }
+      .about-left { position: static; }
       .pricing-grid { grid-template-columns: 1fr; }
       .price-card.popular { transform: none; }
-      .process-steps { flex-direction: column; align-items: center; }
-      .process-arrow { display: none; }
-      .form-card { padding: 28px 20px; }
-      .cta-btn { padding: 16px 32px; font-size: 16px; }
+      .price-card.popular:hover { transform: translateY(-6px); }
+      .process-steps { flex-direction: column; align-items: center; gap: 32px; }
+      .process-line { display: none; }
+      .form-card { padding: 32px 24px; }
       .after-grid { grid-template-columns: 1fr; }
-      .guarantee-box { padding: 36px 24px; }
+      .guarantee-box { padding: 40px 28px; }
+      .cta-btn { padding: 16px 32px; font-size: 16px; }
     }
   </style>
 </head>
@@ -695,52 +919,97 @@
   <!-- NAV -->
   <nav>
     <div class="nav-inner">
-      <a href="#" class="nav-logo">리커리어</a>
-      <a href="#apply" class="nav-cta">커리어 점검 신청</a>
+      <a href="#" class="nav-logo">리<span>커리어</span></a>
+      <a href="#apply" class="nav-cta">무료 상담 아닙니다 →</a>
     </div>
   </nav>
 
-  <!-- 1. HERO — 결과 중심 헤드라인 -->
+  <!-- HERO -->
   <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-particles">
+      <div class="particle"></div><div class="particle"></div>
+      <div class="particle"></div><div class="particle"></div>
+      <div class="particle"></div><div class="particle"></div>
+      <div class="particle"></div><div class="particle"></div>
+    </div>
     <div class="hero-inner">
       <div class="hero-text">
-        <div class="hero-badge">기업 현장 <span class="count-up" data-target="10" data-suffix="년">0년</span> · 면접관 <span class="count-up" data-target="100" data-suffix="회+">0회+</span></div>
-        <h1>50분 후, 다음 스텝이 보입니다</h1>
-        <p class="hero-sub">이 회사, 이 일이 나한테 맞는 건지 모르겠다면 —<br>뽑는 쪽에서 봐온 사람이 방향을 잡아드립니다.</p>
+        <div class="hero-badge">
+          <span class="dot"></span>
+          현직 HR · 면접관 100회+ · 직무전환 경험자
+        </div>
+        <h1><span class="highlight">50분 후,</span><br>당신의 다음 스텝이<br>보이기 시작합니다</h1>
+        <p class="hero-sub">이직? 전환? 방향? — 뽑는 쪽에서 봐온 사람이<br>당신의 경험을 시장 언어로 번역해드립니다.</p>
         <p class="hero-promise">커리어 점검 한 번이면, 막막했던 다음 한 달이 구체적으로 바뀝니다.</p>
-        <a href="#apply" class="cta-btn">커리어 점검 신청하기</a>
+        <div class="hero-cta-group">
+          <a href="#apply" class="cta-btn">커리어 점검 신청하기</a>
+          <a href="#program" class="cta-btn-ghost cta-btn-sm">프로그램 보기 ↓</a>
+        </div>
       </div>
       <div class="hero-photo">
-        <img src="인생이란.png" alt="리커리어 대표">
+        <div class="hero-photo-ring">
+          <div class="hero-photo-inner">
+            <img src="인생이란.png" alt="리커리어 대표">
+          </div>
+        </div>
+        <div class="hero-photo-float f1">🎯 커리어 번역가</div>
+        <div class="hero-photo-float f2">💼 HR 8년차</div>
       </div>
     </div>
   </section>
 
-  <!-- 2. PAIN -->
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <div class="stat-num"><span class="count-up" data-target="100" data-suffix="+">0+</span></div>
+        <div class="stat-label">면접 진행</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num"><span class="count-up" data-target="8" data-suffix="년">0년</span></div>
+        <div class="stat-label">HR 실무</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num"><span class="count-up" data-target="4" data-suffix="개">0개</span></div>
+        <div class="stat-label">직무 경험</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num"><span class="count-up" data-target="100" data-suffix="%">0%</span></div>
+        <div class="stat-label">만족도</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAIN -->
   <section class="pain">
     <div class="section-inner">
-      <div class="section-label fade-up">Check</div>
-      <h2 class="section-title fade-up">이런 고민, 혼자 안고 계신가요?</h2>
+      <div class="section-label reveal">Check</div>
+      <h2 class="section-title reveal">혹시, 이런 상태 아닌가요?</h2>
       <ul class="pain-list">
-        <li class="fade-up">경력은 쌓이는데, 이게 내 커리어 방향이 맞는지 모르겠다</li>
-        <li class="fade-up">이직하고 싶은데, 내 경험이 시장에서 어떻게 읽히는지 모르겠다</li>
-        <li class="fade-up">이력서에 뭘 써야 할지, 내 경험을 어떻게 정리할지 막막하다</li>
-        <li class="fade-up">직무를 바꾸고 싶은데, 어디서부터 시작해야 할지 모르겠다</li>
+        <li class="reveal">경력은 쌓이는데, 이게 내 커리어 방향이 맞는지 모르겠다</li>
+        <li class="reveal reveal-d1">이직하고 싶은데, 내 경험이 시장에서 어떻게 읽히는지 모르겠다</li>
+        <li class="reveal reveal-d2">이력서에 뭘 써야 할지, 내 경험을 어떻게 정리할지 막막하다</li>
+        <li class="reveal reveal-d3">직무를 바꾸고 싶은데, 어디서부터 시작해야 할지 모르겠다</li>
       </ul>
-      <div class="pain-bottom">
+      <div class="pain-bottom reveal">
         스펙이 부족한 게 아닙니다.<br>
         <strong>자신의 경험을 시장 언어로 번역하지 못한 것</strong>뿐입니다.
       </div>
+      <div class="section-cta">
+        <a href="#apply" class="cta-btn cta-btn-sm cta-btn-dark">지금 점검 시작하기</a>
+      </div>
     </div>
   </section>
 
-  <!-- 3. AFTER — Before/After 비교 (신규) -->
+  <!-- AFTER — Before/After -->
   <section class="after">
     <div class="section-inner">
-      <div class="section-label fade-up">After Coaching</div>
-      <h2 class="section-title fade-up">코칭 전과 후, 이렇게 달라집니다</h2>
+      <div class="section-label reveal">After Coaching</div>
+      <h2 class="section-title reveal">코칭 전과 후, 이렇게 달라집니다</h2>
       <div class="after-grid">
-        <div class="after-card before-card fade-up">
+        <div class="after-card before-card reveal">
           <h4>Before</h4>
           <ul>
             <li>"내가 뭘 잘하는지 모르겠어요"</li>
@@ -749,7 +1018,7 @@
             <li>"주변에 물어볼 데가 없어요"</li>
           </ul>
         </div>
-        <div class="after-card after-card-highlight fade-up">
+        <div class="after-card after-highlight reveal reveal-d1">
           <h4>After</h4>
           <ul>
             <li>"내 경험이 이렇게 읽히는 거였어요"</li>
@@ -760,119 +1029,117 @@
         </div>
       </div>
       <div class="section-cta">
-        <a href="#apply" class="cta-btn cta-btn-sm">나도 변화 시작하기</a>
+        <a href="#apply" class="cta-btn cta-btn-sm">나도 변화 시작하기 →</a>
       </div>
     </div>
   </section>
 
-  <!-- 4. SOLUTION 3단계 -->
-  <section class="steps">
+  <!-- STEPS -->
+  <section class="steps" id="program">
     <div class="section-inner">
-      <div class="section-label fade-up">Solution</div>
-      <h2 class="section-title fade-up">커리어 번역, 3단계로 방향을 잡아드립니다</h2>
+      <div class="section-label reveal">Solution</div>
+      <h2 class="section-title reveal">커리어 번역, 3단계로 잡아드립니다</h2>
       <div class="steps-grid">
-        <div class="step-card fade-up fade-up-delay-1">
+        <div class="step-card reveal reveal-d1">
           <div class="step-num">1</div>
           <h3>진단</h3>
           <p>현재 커리어 상태를 객관적으로 점검합니다.<br>"지금 어디에 서 있는지"를 함께 파악합니다.</p>
         </div>
-        <div class="step-card fade-up fade-up-delay-2">
+        <div class="step-card reveal reveal-d2">
           <div class="step-num">2</div>
           <h3>번역</h3>
           <p>당신의 경험을 시장이 알아듣는 언어로 번역합니다.<br>면접관 시점에서 "왜 뽑아야 하는지" 정리합니다.</p>
         </div>
-        <div class="step-card fade-up fade-up-delay-3">
+        <div class="step-card reveal reveal-d3">
           <div class="step-num">3</div>
           <h3>설계</h3>
           <p>구체적인 액션 플랜을 함께 만듭니다.<br>버티는 게 아니라, 다음을 위한 재료를 만듭니다.</p>
         </div>
       </div>
-      <div class="section-cta">
-        <a href="#apply" class="cta-btn cta-btn-sm cta-btn-outline">프로그램 자세히 보기</a>
-      </div>
     </div>
   </section>
 
-  <!-- 5. ABOUT + 스토리 + 사례 + 후기 -->
+  <!-- ABOUT -->
   <section class="about">
     <div class="section-inner">
-      <div class="section-label fade-up">About</div>
-      <h2 class="section-title fade-up">왜 제가 도와드릴 수 있냐면요</h2>
+      <div class="section-label reveal">About</div>
+      <h2 class="section-title reveal">왜 제가 도와드릴 수 있냐면요</h2>
       <div class="about-content">
-        <div class="about-left">
+        <div class="about-left reveal">
           <div class="about-photo">
-            <img src="인생이란.png" alt="리커리어 대표">
+            <div class="about-photo-inner">
+              <img src="인생이란.png" alt="리커리어 대표">
+            </div>
           </div>
           <div class="about-name">리커리어 대표</div>
           <div class="about-role">현직 HR · 커리어 코치</div>
         </div>
         <div>
-          <div class="about-story">
+          <div class="about-story reveal">
             저도 커리어 앞에서 수없이 흔들렸던 사람입니다.<br>
             이직하고, 전환하고, 도전했다가 무너지고, 다시 일어섰습니다.<br>
             면접관석에 앉아 사람을 뽑으면서도,<br>
-            정작 제 방향을 못 잡아서 괴로웠던 적이 있습니다.<br>
+            정작 제 방향을 못 잡아서 괴로웠던 적이 있습니다.<br><br>
             <strong>그래서 압니다 — 지금 뭐가 막막한 건지.</strong>
           </div>
-          <ul class="about-list">
+          <ul class="about-list reveal">
             <li>대기업·공공기관·금융권에서 구매, 사업기획, HR까지 다양한 직무 경험</li>
             <li>HR 실무 8년 — 면접관 100회 이상, 사람을 "뽑는 쪽"에서 봐온 시선</li>
             <li>직접 직무 전환과 이직을 여러 번 경험한 사람</li>
           </ul>
-          <div class="about-cases">
+          <div class="about-cases reveal">
             인사, 영업, 의료, 설계 — 전혀 다른 분야의 분들이 찾아오셨고,<br>
             공통적으로 <strong>"방향이 잡혔다"</strong>고 하셨습니다.
           </div>
-          <div class="about-quote">
+          <div class="about-quote reveal">
             "이력서 고쳐주는 건 AI도 합니다.<br>
             저는 불안한 커리어 앞에서 방향을 잡아주는 사람입니다."
           </div>
-          <div class="about-review">
+          <div class="about-review reveal">
             <div class="about-review-label">실제 코칭 후기</div>
-            <img src="카톡후기.png" alt="실제 코칭 후기 캡쳐" style="width:100%; border-radius:8px;">
+            <img src="카톡후기.png" alt="실제 코칭 후기 캡쳐">
           </div>
         </div>
       </div>
       <div class="section-cta">
-        <a href="#apply" class="cta-btn cta-btn-sm">커리어 점검 신청하기</a>
+        <a href="#apply" class="cta-btn cta-btn-sm">커리어 점검 신청하기 →</a>
       </div>
     </div>
   </section>
 
-  <!-- 6. PROCESS -->
+  <!-- PROCESS -->
   <section class="process section-compact">
     <div class="section-inner">
-      <div class="section-label fade-up">Process</div>
-      <h2 class="section-title fade-up">이렇게 진행됩니다</h2>
+      <div class="section-label reveal">Process</div>
+      <h2 class="section-title reveal">이렇게 진행됩니다</h2>
       <div class="process-steps">
-        <div class="process-step">
+        <div class="process-line"></div>
+        <div class="process-step reveal reveal-d1">
           <div class="process-icon">1</div>
           <h4>폼 작성</h4>
-          <p>아래 신청 폼을 작성해주세요. 1분이면 됩니다.</p>
+          <p>아래 신청 폼을 작성해주세요.<br>1분이면 됩니다.</p>
         </div>
-        <div class="process-arrow">→</div>
-        <div class="process-step">
+        <div class="process-step reveal reveal-d2">
           <div class="process-icon">2</div>
           <h4>사전 연락</h4>
-          <p>카카오톡으로 일정을 조율합니다.</p>
+          <p>카카오톡으로<br>일정을 조율합니다.</p>
         </div>
-        <div class="process-arrow">→</div>
-        <div class="process-step">
+        <div class="process-step reveal reveal-d3">
           <div class="process-icon">3</div>
           <h4>코칭 시작</h4>
-          <p>약속된 시간에 카톡 보이스톡으로 연결됩니다.</p>
+          <p>약속된 시간에<br>카톡 보이스톡으로 연결됩니다.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 7. PRICING -->
+  <!-- PRICING -->
   <section class="pricing">
     <div class="section-inner">
-      <div class="section-label fade-up">Program</div>
-      <h2 class="section-title fade-up">프로그램 안내</h2>
+      <div class="section-label reveal">Program</div>
+      <h2 class="section-title reveal">프로그램 안내</h2>
       <div class="pricing-grid">
-        <div class="price-card">
+        <div class="price-card reveal">
           <h3>1회 커리어 점검</h3>
           <p class="subtitle">방향이 막막할 때, 일단 한 번</p>
           <p class="price-original">10만원</p>
@@ -884,7 +1151,7 @@
             <li>실행 가능한 액션 플랜 2~3개</li>
           </ul>
         </div>
-        <div class="price-card popular">
+        <div class="price-card popular reveal reveal-d1">
           <div class="price-badge">추천</div>
           <h3>3회 커리어 설계 패키지</h3>
           <p class="subtitle">제대로 방향을 잡고 싶다면</p>
@@ -908,10 +1175,10 @@
     </div>
   </section>
 
-  <!-- 8. GUARANTEE (신규) -->
+  <!-- GUARANTEE -->
   <section class="guarantee">
-    <div class="guarantee-box fade-up">
-      <div class="guarantee-icon">&#x1F6E1;</div>
+    <div class="guarantee-box reveal">
+      <div class="guarantee-icon">🛡️</div>
       <h3>만족하지 못하면, 돈을 받지 않겠습니다</h3>
       <p>코칭 시작 전까지 <strong>100% 환불</strong> 가능합니다.<br>
       코칭 후에도 도움이 안 됐다고 느끼시면 말씀해주세요.<br>
@@ -919,7 +1186,7 @@
     </div>
   </section>
 
-  <!-- 9. FORM -->
+  <!-- FORM -->
   <section class="form-section" id="apply">
     <div class="section-inner" style="text-align:center;">
       <h2 class="section-title">커리어 점검 신청하기</h2>
@@ -942,10 +1209,10 @@
             <label>지금 가장 큰 고민 한 줄</label>
             <textarea name="concern" placeholder="예: 이직해야 할지, 더 버텨야 할지 모르겠습니다"></textarea>
           </div>
-          <button type="submit" class="form-submit">신청하기</button>
+          <button type="submit" class="form-submit">신청하기 →</button>
         </form>
         <div class="form-thanks" id="formThanks">
-          <h3>신청이 완료되었습니다!</h3>
+          <h3>✅ 신청이 완료되었습니다!</h3>
           <p>영업시간 내 당일 카카오톡으로 연락드리겠습니다.<br>
           카톡으로 일정 조율 후 코칭이 시작됩니다.</p>
         </div>
@@ -953,40 +1220,43 @@
     </div>
   </section>
 
-  <!-- 10. FAQ -->
+  <!-- FAQ -->
   <section class="faq">
     <div class="section-inner">
-      <div class="section-label fade-up">FAQ</div>
-      <h2 class="section-title fade-up">자주 묻는 질문</h2>
-      <div class="faq-item">
+      <div class="section-label reveal">FAQ</div>
+      <h2 class="section-title reveal">자주 묻는 질문</h2>
+      <div class="faq-item reveal">
         <div class="faq-q">Q. 코칭 전에 준비할 게 있나요?</div>
         <div class="faq-a">별도 준비 없이 편하게 오셔도 됩니다. 신청 폼에 고민을 한 줄만 적어주시면 충분합니다.</div>
       </div>
-      <div class="faq-item">
+      <div class="faq-item reveal">
         <div class="faq-q">Q. 이직 준비 중이 아니어도 괜찮나요?</div>
         <div class="faq-a">네. 이직뿐 아니라 현재 직장에서의 방향성, 직무 전환, 커리어 장기 설계 등 모두 다룹니다.</div>
       </div>
-      <div class="faq-item">
+      <div class="faq-item reveal">
         <div class="faq-q">Q. 1회만 받아도 효과가 있나요?</div>
         <div class="faq-a">1회만으로도 현재 상황 정리와 방향성 확인이 가능합니다. 더 깊은 설계가 필요하면 패키지를 안내드립니다.</div>
       </div>
-      <div class="faq-item">
+      <div class="faq-item reveal">
         <div class="faq-q">Q. 7만원의 가치가 있을까요?</div>
         <div class="faq-a">방향 없이 보내는 한 달, 맞지 않는 회사에 지원하는 시간, 합격하고도 후회하는 이직 — 이 비용이 훨씬 큽니다. 50분 안에 최소 "다음 한 달 뭘 해야 하는지"는 잡아드립니다.</div>
       </div>
-      <div class="faq-item">
+      <div class="faq-item reveal">
         <div class="faq-q">Q. 환불 가능한가요?</div>
         <div class="faq-a">코칭 시작 전까지 100% 환불 가능합니다. 코칭 후에도 도움이 안 됐다면 말씀해주세요.</div>
       </div>
     </div>
   </section>
 
-  <!-- 11. FINAL CTA — 긴급성 강화 -->
+  <!-- FINAL CTA -->
   <section class="final-cta">
-    <div class="urgency">런칭 특별가 · 선착순 15명 마감 중</div>
-    <h2 class="section-title">당신의 경험, 시장 언어로 번역해드립니다</h2>
-    <p>커리어 방향, 혼자 고민하지 마세요. 50분이면 다음 스텝이 보입니다.</p>
-    <a href="#apply" class="cta-btn">커리어 점검 신청하기</a>
+    <div class="urgency-badge">
+      <span class="dot"></span>
+      런칭 특별가 · 선착순 15명 마감 중
+    </div>
+    <h2 class="section-title">당신의 경험,<br>시장 언어로 번역해드립니다</h2>
+    <p>커리어 방향, 혼자 고민하지 마세요.<br>50분이면 다음 스텝이 보입니다.</p>
+    <a href="#apply" class="cta-btn">커리어 점검 신청하기 →</a>
   </section>
 
   <!-- FOOTER -->
@@ -998,49 +1268,40 @@
   </footer>
 
   <script>
-    // Scroll fade-up animation
-    const observer = new IntersectionObserver((entries) => {
+    // Scroll reveal
+    const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
+        if (entry.isIntersecting) entry.target.classList.add('visible');
       });
-    }, { threshold: 0.15 });
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    // Number count-up animation
+    // Count-up
     function animateCount(el, target, suffix) {
       let current = 0;
-      const step = Math.max(1, Math.floor(target / 30));
+      const step = Math.max(1, Math.floor(target / 25));
       const timer = setInterval(() => {
         current += step;
         if (current >= target) { current = target; clearInterval(timer); }
         el.textContent = current + suffix;
-      }, 40);
+      }, 50);
     }
-    const statObserver = new IntersectionObserver((entries) => {
+    const countObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting && !entry.target.dataset.counted) {
           entry.target.dataset.counted = 'true';
-          const target = parseInt(entry.target.dataset.target);
-          const suffix = entry.target.dataset.suffix || '';
-          animateCount(entry.target, target, suffix);
+          animateCount(entry.target, parseInt(entry.target.dataset.target), entry.target.dataset.suffix || '');
         }
       });
     }, { threshold: 0.5 });
-    document.querySelectorAll('.count-up').forEach(el => statObserver.observe(el));
+    document.querySelectorAll('.count-up').forEach(el => countObserver.observe(el));
 
-    // Nav shadow on scroll
+    // Nav scroll
     window.addEventListener('scroll', () => {
-      const nav = document.querySelector('nav');
-      if (window.scrollY > 50) {
-        nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.08)';
-      } else {
-        nav.style.boxShadow = 'none';
-      }
+      document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 60);
     });
 
-    // Form submission
+    // Form
     document.getElementById('applyForm').addEventListener('submit', function(e) {
       e.preventDefault();
       var form = this;
