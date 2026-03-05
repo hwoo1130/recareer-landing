@@ -24,6 +24,7 @@
       --coral-hover: #E55A2B;
       --bg-white: #FFFFFF;
       --bg-gray: #F8F9FA;
+      --bg-warm: #FFF8F5;
       --bg-dark: #0F1923;
       --text-main: #1A1A1A;
       --text-sub: #6B7280;
@@ -139,6 +140,18 @@
     .cta-btn-sm {
       padding: 14px 32px; font-size: 15px;
     }
+    .cta-btn-outline {
+      background: transparent;
+      border: 2px solid var(--coral);
+      color: var(--coral);
+      box-shadow: none;
+      animation: none;
+    }
+    .cta-btn-outline:hover {
+      background: var(--coral);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(255,107,53,0.4);
+    }
 
     /* ===== SECTIONS COMMON ===== */
     section { padding: 100px 24px; }
@@ -156,6 +169,10 @@
     .section-desc {
       font-size: 17px; color: var(--text-sub); line-height: 1.7;
       margin-bottom: 48px;
+    }
+    .section-cta {
+      margin-top: 48px;
+      text-align: center;
     }
 
     /* ===== PAIN ===== */
@@ -187,9 +204,53 @@
       line-height: 1.7;
     }
     .pain-bottom strong { color: var(--coral); }
-    .pain-cta {
-      margin-top: 36px;
-      text-align: center;
+
+    /* ===== AFTER (변화 섹션) ===== */
+    .after { background: var(--bg-warm); }
+    .after-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .after-card {
+      padding: 28px 24px;
+      border-radius: 16px;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    .after-card.before-card {
+      background: #fff;
+      border: 1px solid #E5E7EB;
+      color: var(--text-sub);
+    }
+    .after-card.after-card-highlight {
+      background: var(--navy);
+      color: #fff;
+    }
+    .after-card h4 {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+    .after-card.before-card h4 { color: var(--text-light); }
+    .after-card.after-card-highlight h4 { color: var(--coral); }
+    .after-card ul {
+      list-style: none;
+    }
+    .after-card ul li {
+      padding: 6px 0;
+      padding-left: 24px;
+      position: relative;
+    }
+    .after-card.before-card ul li::before {
+      content: '✕'; position: absolute; left: 0;
+      color: #D1D5DB; font-weight: 700;
+    }
+    .after-card.after-card-highlight ul li::before {
+      content: '→'; position: absolute; left: 0;
+      color: var(--coral); font-weight: 700;
     }
 
     /* ===== STEPS ===== */
@@ -405,6 +466,36 @@
     }
     .pricing-bottom strong { color: var(--navy); }
 
+    /* ===== GUARANTEE ===== */
+    .guarantee {
+      background: var(--bg-white);
+      padding: 72px 24px;
+    }
+    .guarantee-box {
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 48px 40px;
+      background: var(--bg-warm);
+      border-radius: 20px;
+      border: 2px solid rgba(255,107,53,0.15);
+    }
+    .guarantee-icon {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    .guarantee-box h3 {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+    .guarantee-box p {
+      font-size: 16px;
+      color: var(--text-sub);
+      line-height: 1.7;
+    }
+
     /* ===== FORM ===== */
     .form-section {
       background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
@@ -467,7 +558,6 @@
       background: var(--coral-hover);
       transform: translateY(-1px);
     }
-    /* 감사 메시지 */
     .form-thanks {
       display: none;
       text-align: center;
@@ -513,6 +603,16 @@
       font-size: 17px; color: var(--text-sub);
       margin-bottom: 32px;
     }
+    .final-cta .urgency {
+      display: inline-block;
+      background: var(--bg-warm);
+      color: var(--coral);
+      font-weight: 700;
+      font-size: 15px;
+      padding: 8px 20px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+    }
 
     /* ===== FOOTER ===== */
     footer {
@@ -553,10 +653,6 @@
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-8px); }
     }
-    @keyframes countUp {
-      from { opacity: 0; transform: scale(0.5); }
-      to { opacity: 1; transform: scale(1); }
-    }
 
     .fade-up {
       opacity: 0;
@@ -576,7 +672,7 @@
       .hero { padding: 120px 20px 70px; }
       .hero-inner { flex-direction: column-reverse; text-align: center; gap: 24px; }
       .hero-photo { width: 140px; height: 140px; }
-      .hero h1 { font-size: 30px; }
+      .hero h1 { font-size: 28px; }
       .hero-sub { font-size: 16px; }
       section { padding: 64px 20px; }
       .section-compact { padding: 48px 20px; }
@@ -589,6 +685,8 @@
       .process-arrow { display: none; }
       .form-card { padding: 28px 20px; }
       .cta-btn { padding: 16px 32px; font-size: 16px; }
+      .after-grid { grid-template-columns: 1fr; }
+      .guarantee-box { padding: 36px 24px; }
     }
   </style>
 </head>
@@ -602,14 +700,14 @@
     </div>
   </nav>
 
-  <!-- 1. HERO (사진 포함 + 결과 약속) -->
+  <!-- 1. HERO — 결과 중심 헤드라인 -->
   <section class="hero">
     <div class="hero-inner">
       <div class="hero-text">
         <div class="hero-badge">기업 현장 <span class="count-up" data-target="10" data-suffix="년">0년</span> · 면접관 <span class="count-up" data-target="100" data-suffix="회+">0회+</span></div>
-        <h1>이 회사, 이 일이<br>나한테 맞는 건지 모르겠다면</h1>
-        <p class="hero-sub">기업 현장 10년, 뽑는 쪽에서 봐온 사람이<br>당신의 다음 스텝을 함께 설계합니다.</p>
-        <p class="hero-promise">50분 커리어 점검으로, 다음 한 달 뭘 해야 하는지 잡아드립니다.</p>
+        <h1>50분 후, 다음 스텝이 보입니다</h1>
+        <p class="hero-sub">이 회사, 이 일이 나한테 맞는 건지 모르겠다면 —<br>뽑는 쪽에서 봐온 사람이 방향을 잡아드립니다.</p>
+        <p class="hero-promise">커리어 점검 한 번이면, 막막했던 다음 한 달이 구체적으로 바뀝니다.</p>
         <a href="#apply" class="cta-btn">커리어 점검 신청하기</a>
       </div>
       <div class="hero-photo">
@@ -618,28 +716,56 @@
     </div>
   </section>
 
-  <!-- 2. PAIN + CTA -->
+  <!-- 2. PAIN -->
   <section class="pain">
     <div class="section-inner">
       <div class="section-label fade-up">Check</div>
       <h2 class="section-title fade-up">이런 고민, 혼자 안고 계신가요?</h2>
       <ul class="pain-list">
-        <li>경력은 쌓이는데, 이게 내 커리어 방향이 맞는지 모르겠다</li>
-        <li>이직하고 싶은데, 내 경험이 시장에서 어떻게 읽히는지 모르겠다</li>
-        <li>이력서에 뭘 써야 할지, 내 경험을 어떻게 정리할지 막막하다</li>
-        <li>직무를 바꾸고 싶은데, 어디서부터 시작해야 할지 모르겠다</li>
+        <li class="fade-up">경력은 쌓이는데, 이게 내 커리어 방향이 맞는지 모르겠다</li>
+        <li class="fade-up">이직하고 싶은데, 내 경험이 시장에서 어떻게 읽히는지 모르겠다</li>
+        <li class="fade-up">이력서에 뭘 써야 할지, 내 경험을 어떻게 정리할지 막막하다</li>
+        <li class="fade-up">직무를 바꾸고 싶은데, 어디서부터 시작해야 할지 모르겠다</li>
       </ul>
       <div class="pain-bottom">
         스펙이 부족한 게 아닙니다.<br>
         <strong>자신의 경험을 시장 언어로 번역하지 못한 것</strong>뿐입니다.
       </div>
-      <div class="pain-cta">
-        <a href="#apply" class="cta-btn cta-btn-sm">지금 바로 점검받기</a>
+    </div>
+  </section>
+
+  <!-- 3. AFTER — Before/After 비교 (신규) -->
+  <section class="after">
+    <div class="section-inner">
+      <div class="section-label fade-up">After Coaching</div>
+      <h2 class="section-title fade-up">코칭 전과 후, 이렇게 달라집니다</h2>
+      <div class="after-grid">
+        <div class="after-card before-card fade-up">
+          <h4>Before</h4>
+          <ul>
+            <li>"내가 뭘 잘하는지 모르겠어요"</li>
+            <li>"이력서 쓸 때마다 막막해요"</li>
+            <li>"이직해야 할지, 버텨야 할지..."</li>
+            <li>"주변에 물어볼 데가 없어요"</li>
+          </ul>
+        </div>
+        <div class="after-card after-card-highlight fade-up">
+          <h4>After</h4>
+          <ul>
+            <li>"내 경험이 이렇게 읽히는 거였어요"</li>
+            <li>"뭘 먼저 해야 할지 정리됐어요"</li>
+            <li>"자신감이 생겨서 도전해보려고요"</li>
+            <li>"혼자 고민할 때와 완전 달라요"</li>
+          </ul>
+        </div>
+      </div>
+      <div class="section-cta">
+        <a href="#apply" class="cta-btn cta-btn-sm">나도 변화 시작하기</a>
       </div>
     </div>
   </section>
 
-  <!-- 3. SOLUTION 3단계 (재정의→번역) -->
+  <!-- 4. SOLUTION 3단계 -->
   <section class="steps">
     <div class="section-inner">
       <div class="section-label fade-up">Solution</div>
@@ -661,10 +787,13 @@
           <p>구체적인 액션 플랜을 함께 만듭니다.<br>버티는 게 아니라, 다음을 위한 재료를 만듭니다.</p>
         </div>
       </div>
+      <div class="section-cta">
+        <a href="#apply" class="cta-btn cta-btn-sm cta-btn-outline">프로그램 자세히 보기</a>
+      </div>
     </div>
   </section>
 
-  <!-- 4. ABOUT + 스토리 + 사례 + 후기 통합 -->
+  <!-- 5. ABOUT + 스토리 + 사례 + 후기 -->
   <section class="about">
     <div class="section-inner">
       <div class="section-label fade-up">About</div>
@@ -704,10 +833,13 @@
           </div>
         </div>
       </div>
+      <div class="section-cta">
+        <a href="#apply" class="cta-btn cta-btn-sm">커리어 점검 신청하기</a>
+      </div>
     </div>
   </section>
 
-  <!-- 5. PROCESS (가격표 앞으로 이동) -->
+  <!-- 6. PROCESS -->
   <section class="process section-compact">
     <div class="section-inner">
       <div class="section-label fade-up">Process</div>
@@ -734,7 +866,7 @@
     </div>
   </section>
 
-  <!-- 6. PRICING (결과물 명시) -->
+  <!-- 7. PRICING -->
   <section class="pricing">
     <div class="section-inner">
       <div class="section-label fade-up">Program</div>
@@ -776,7 +908,18 @@
     </div>
   </section>
 
-  <!-- 7. FORM -->
+  <!-- 8. GUARANTEE (신규) -->
+  <section class="guarantee">
+    <div class="guarantee-box fade-up">
+      <div class="guarantee-icon">&#x1F6E1;</div>
+      <h3>만족하지 못하면, 돈을 받지 않겠습니다</h3>
+      <p>코칭 시작 전까지 <strong>100% 환불</strong> 가능합니다.<br>
+      코칭 후에도 도움이 안 됐다고 느끼시면 말씀해주세요.<br>
+      방향 하나 못 잡아드리면 받을 이유가 없습니다.</p>
+    </div>
+  </section>
+
+  <!-- 9. FORM -->
   <section class="form-section" id="apply">
     <div class="section-inner" style="text-align:center;">
       <h2 class="section-title">커리어 점검 신청하기</h2>
@@ -810,7 +953,7 @@
     </div>
   </section>
 
-  <!-- 8. FAQ (가격 가치 FAQ 추가) -->
+  <!-- 10. FAQ -->
   <section class="faq">
     <div class="section-inner">
       <div class="section-label fade-up">FAQ</div>
@@ -833,13 +976,14 @@
       </div>
       <div class="faq-item">
         <div class="faq-q">Q. 환불 가능한가요?</div>
-        <div class="faq-a">코칭 시작 전까지 100% 환불 가능합니다.</div>
+        <div class="faq-a">코칭 시작 전까지 100% 환불 가능합니다. 코칭 후에도 도움이 안 됐다면 말씀해주세요.</div>
       </div>
     </div>
   </section>
 
-  <!-- 9. FINAL CTA (커리어 번역 반복) -->
+  <!-- 11. FINAL CTA — 긴급성 강화 -->
   <section class="final-cta">
+    <div class="urgency">런칭 특별가 · 선착순 15명 마감 중</div>
     <h2 class="section-title">당신의 경험, 시장 언어로 번역해드립니다</h2>
     <p>커리어 방향, 혼자 고민하지 마세요. 50분이면 다음 스텝이 보입니다.</p>
     <a href="#apply" class="cta-btn">커리어 점검 신청하기</a>
@@ -850,7 +994,7 @@
     <div class="footer-brand">리커리어</div>
     대표: 리커리어 · 이메일: re_career@naver.com<br>
     <a href="https://blog.naver.com/re_career" target="_blank">네이버 블로그</a> · <a href="https://brunch.co.kr/@hwoo1130" target="_blank">브런치</a><br><br>
-    © 2026 리커리어. All rights reserved.
+    &copy; 2026 리커리어. All rights reserved.
   </footer>
 
   <script>
@@ -896,6 +1040,7 @@
       }
     });
 
+    // Form submission
     document.getElementById('applyForm').addEventListener('submit', function(e) {
       e.preventDefault();
       var form = this;
