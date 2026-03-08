@@ -575,6 +575,91 @@
       box-shadow: var(--shadow-sm);
     }
 
+    /* ═══════ REAL CASE ═══════ */
+    .real-case { background: var(--bg-cool); }
+    .real-case-subtitle {
+      text-align: center; color: var(--text-500);
+      font-size: 15px; margin-top: -8px; margin-bottom: 40px;
+    }
+    .real-case-block {
+      background: var(--bg-white); border-radius: var(--radius-xl);
+      padding: 36px 32px; margin-bottom: 24px;
+      border: 1px solid rgba(0,0,0,0.06);
+      box-shadow: var(--shadow-sm);
+    }
+    .real-case-block h4 {
+      font-size: 14px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 1.5px; margin-bottom: 20px;
+      color: var(--text-300);
+    }
+    .real-case-block h4.after-label { color: var(--coral-500); }
+    .real-case-block.dark-block {
+      background: var(--navy-800); color: #fff;
+      border: none; box-shadow: var(--shadow-lg);
+    }
+    .real-case-block.dark-block h4 { color: var(--coral-400); }
+    .rc-group-title {
+      font-size: 14px; font-weight: 700; color: var(--text-700);
+      margin: 20px 0 8px; padding-bottom: 6px;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .dark-block .rc-group-title {
+      color: var(--coral-400); border-bottom-color: rgba(255,255,255,0.1);
+    }
+    .rc-item {
+      font-size: 14px; line-height: 1.8; color: var(--text-500);
+      padding: 3px 0 3px 16px; position: relative;
+    }
+    .rc-item::before {
+      content: '·'; position: absolute; left: 0;
+      color: var(--text-300); font-weight: 700;
+    }
+    .dark-block .rc-item { color: rgba(255,255,255,0.85); }
+    .dark-block .rc-item::before { color: var(--coral-400); }
+    .rc-arrow {
+      font-size: 14px; line-height: 1.8; color: var(--coral-500);
+      padding: 2px 0 2px 16px; position: relative;
+    }
+    .dark-block .rc-arrow { color: var(--coral-400); }
+    .rc-arrow::before {
+      content: '→'; position: absolute; left: 0; font-weight: 700;
+    }
+    .rc-comment {
+      background: var(--coral-50); border-radius: var(--radius-lg);
+      padding: 20px 24px; margin-top: 16px;
+      font-size: 14px; line-height: 1.8; color: var(--text-500);
+    }
+    .rc-comment strong { color: var(--text-700); }
+    .rc-comment-item {
+      padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.04);
+    }
+    .rc-comment-item:last-child { border-bottom: none; }
+    .rc-comment-quote { color: var(--text-700); font-weight: 600; }
+    .rc-summary {
+      text-align: center; margin-top: 28px;
+      font-size: 15px; line-height: 1.8; color: var(--text-500);
+    }
+    .rc-summary strong { color: var(--text-900); }
+    .rc-table {
+      width: 100%; border-collapse: collapse; margin-top: 20px;
+      font-size: 14px;
+    }
+    .rc-table th {
+      background: var(--navy-800); color: #fff;
+      padding: 12px 16px; text-align: left; font-weight: 700;
+    }
+    .rc-table th:first-child { border-radius: var(--radius-md) 0 0 0; }
+    .rc-table th:last-child { border-radius: 0 var(--radius-md) 0 0; }
+    .rc-table td {
+      padding: 12px 16px; border-bottom: 1px solid rgba(0,0,0,0.06);
+      color: var(--text-500); line-height: 1.6;
+    }
+    .rc-table tr:last-child td:first-child { border-radius: 0 0 0 var(--radius-md); }
+    .rc-table tr:last-child td:last-child { border-radius: 0 0 var(--radius-md) 0; }
+    .rc-table td:first-child { font-weight: 600; color: var(--text-700); width: 100px; }
+    .rc-table .before-col { background: #FAFBFC; }
+    .rc-table .after-col { background: var(--coral-50); }
+
     /* ═══════ STEPS ═══════ */
     .steps { background: var(--bg-body); }
     .steps-grid {
@@ -1051,6 +1136,9 @@
       .pain-grid { grid-template-columns: 1fr; }
       .ba-grid { grid-template-columns: 1fr; gap: 16px; }
       .ba-arrow { transform: rotate(90deg); }
+      .real-case-block { padding: 24px 20px; }
+      .rc-table { font-size: 13px; }
+      .rc-table td, .rc-table th { padding: 10px 12px; }
       .steps-grid { grid-template-columns: 1fr; }
       .step-card::after { display: none; }
       .about-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -1141,8 +1229,8 @@
         </h1>
 
         <p class="hero-subtitle">
-          이직? 전환? 방향? — 뽑는 쪽에서 봐온 사람이<br>
-          당신의 경험을 <strong>시장 언어로 번역</strong>해드립니다.
+          이직? 전환? — 그 전에, 지금 왜 움직이고 싶은지부터 정리해야 합니다.<br>
+          뽑는 쪽에서 봐온 사람이 <strong>방향부터 잡아드립니다.</strong>
         </p>
 
         <div class="hero-cta-group">
@@ -1221,6 +1309,10 @@
           <div class="pain-icon">🔄</div>
           직무를 바꾸고 싶은데, 어디서부터 시작해야 할지 모르겠다
         </div>
+        <div class="pain-card rv rv-d4">
+          <div class="pain-icon">❓</div>
+          이직하고 싶은데, 사실 왜 옮기고 싶은 건지 나도 잘 모르겠다
+        </div>
       </div>
       <div class="pain-bottom rv">
         스펙이 부족한 게 아닙니다.<br>
@@ -1272,6 +1364,73 @@
     </div>
   </section>
 
+  <!-- ═══════ REAL CASE ═══════ -->
+  <section class="real-case">
+    <div class="container">
+      <div class="sec-label rv">Real Case</div>
+      <h2 class="sec-title rv">실제 코칭 사례 — 경력기술서 Before / After</h2>
+      <p class="real-case-subtitle rv">외식 프랜차이즈 인사팀 · 채용 담당 · 경력 7년차</p>
+
+      <!-- Before -->
+      <div class="real-case-block rv">
+        <h4>Before — 코칭 전 이력서</h4>
+
+        <div class="rc-group-title">채용 운영 실무</div>
+        <div class="rc-item">14개 매장 채용 TO 및 전반적인 관리</div>
+        <div class="rc-item">다이렉트 소싱(직접 제안), 유료공고(분기) 등 채용 루트 다각화</div>
+        <div class="rc-item">서류 및 면접 전형, 입사자 처우 산정, 입사 조율 등 채용 End to End 업무 전반 수행</div>
+        <div class="rc-item">주요 성과: 연 120명 규모 필요 인력 안정적 채용, 외식 특유 높은 이직률 속 인력 공백 최소화</div>
+
+        <div class="rc-group-title">채용기획</div>
+        <div class="rc-item">JD·회사소개·채용브랜딩 자료 패키지 개발을 통한 교육원 홍보 활동 수행</div>
+        <div class="rc-item">교육기관과 MOU 체결, 연 5명 규모 검증 인재 확보</div>
+        <div class="rc-item">주요 성과: 약 10명 규모 인재 확보, 퇴사자 2명, 조직 안정성 강화</div>
+
+        <div class="rc-group-title">채용 브랜딩 및 채널 다각화</div>
+        <div class="rc-item">복리후생 및 브랜드 설명 자료 리뉴얼</div>
+        <div class="rc-item">채용 공고 템플릿 고도화, 직관성 및 브랜딩 관점의 공고 개선</div>
+        <div class="rc-item">주요 성과: 공고별 평균 지원 유입률 30% 증가</div>
+      </div>
+
+      <!-- 면접관 코멘트 -->
+      <div class="rc-comment rv">
+        <h4 style="font-size:14px; font-weight:800; color:var(--text-700); margin-bottom:16px;">🔍 면접관은 이렇게 읽습니다</h4>
+        <div class="rc-comment-item">
+          <div class="rc-comment-quote">"14개 매장 채용 TO 및 전반적인 관리"</div>
+          그래서 뭘 한 건지 와닿지 않습니다. '관리'라는 말이 너무 넓어요.
+        </div>
+        <div class="rc-comment-item">
+          <div class="rc-comment-quote">"다이렉트 소싱"</div>
+          어디서 어떻게 소싱해서, 그 결과가 어떻게 됐는지가 안 보입니다. 소싱은 방법이지 성과가 아닙니다.
+        </div>
+        <div class="rc-comment-item">
+          <div class="rc-comment-quote">"10명 규모 인재 확보"</div>
+          본인이 잘해서 된 건지, MOU 맺으니까 자연스럽게 온 건지 구분이 안 돼요.
+        </div>
+        <div class="rc-comment-item">
+          <div class="rc-comment-quote">"인력 공백 최소화"</div>
+          최소화가 어느 정도인지. 평균 며칠 만에 충원했는지, 이전 대비 얼마나 줄었는지.
+        </div>
+        <div style="margin-top:12px; font-weight:600; color:var(--text-700);">
+          정리하면, 지금은 "이런 일을 했다"가 적혀 있는 건데,<br>
+          면접관이 보고 싶은 건 <strong>"이 사람이 와서 뭘 바꿨는지"</strong>입니다.
+        </div>
+      </div>
+
+      <div class="rc-summary rv" style="margin-top:32px;">
+        <strong>이걸 세션에서 같이 바꿉니다.</strong><br>
+        당신의 이력서도 면접관이 어떻게 읽고 있는지, 직접 짚어드립니다.
+      </div>
+
+      <div class="sec-cta">
+        <a href="#apply" class="btn-main btn-sm">
+          내 이력서도 점검받기
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <div class="divider"></div>
 
   <!-- ═══════ STEPS ═══════ -->
@@ -1283,7 +1442,7 @@
         <div class="step-card rv rv-d1">
           <div class="step-num">1</div>
           <h3>진단</h3>
-          <p>현재 커리어 상태를 객관적으로 점검합니다.<br>"지금 어디에 서 있는지"를 함께 파악합니다.</p>
+          <p>지금 왜 불안한지, 진짜 원하는 게 뭔지 정리합니다.<br>이게 안 되면 이력서를 아무리 잘 써도 안 맞는 곳에 지원하게 됩니다.</p>
         </div>
         <div class="step-card rv rv-d2">
           <div class="step-num">2</div>
@@ -1293,7 +1452,7 @@
         <div class="step-card rv rv-d3">
           <div class="step-num">3</div>
           <h3>설계</h3>
-          <p>구체적인 액션 플랜을 함께 만듭니다.<br>버티는 게 아니라, 다음을 위한 재료를 만듭니다.</p>
+          <p>방향에 맞는 공고를 고르는 기준, 면접에서 말할 이직 사유,<br>실전 이력서까지 구체적으로 만듭니다.</p>
         </div>
       </div>
     </div>
@@ -1334,6 +1493,10 @@
           <div class="about-quote rv">
             "이력서 고쳐주는 건 AI도 합니다.<br>
             저는 불안한 커리어 앞에서 방향을 잡아주는 사람입니다."
+          </div>
+          <div class="about-story rv" style="margin-top: 1.2rem;">
+            이직하고 싶다는 분의 이야기를 들어보면, 실제로는 이직이 아니라 <strong>지금 왜 불안한지를 모르는 경우</strong>가 대부분입니다.<br>
+            공고를 넣기 전에 그걸 먼저 정리해야, 안 맞는 곳에 시간 낭비하지 않습니다.
           </div>
           <div class="about-review rv">
             <div class="about-review-label">실제 코칭 후기</div>
