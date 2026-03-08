@@ -630,6 +630,14 @@
       font-size: 14px; line-height: 1.8; color: var(--text-500);
     }
     .rc-comment strong { color: var(--text-700); }
+    .rc-macro {
+      padding: 16px 20px; background: var(--bg-white);
+      border-radius: var(--radius-md); border-left: 3px solid var(--coral-500);
+      margin-bottom: 20px; font-size: 15px; line-height: 1.8; color: var(--text-700);
+    }
+    .rc-detail-label {
+      font-size: 13px; font-weight: 600; color: var(--text-400); margin-bottom: 12px;
+    }
     .rc-comment-item {
       padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.04);
     }
@@ -1137,8 +1145,23 @@
       .ba-grid { grid-template-columns: 1fr; gap: 16px; }
       .ba-arrow { transform: rotate(90deg); }
       .real-case-block { padding: 24px 20px; }
-      .rc-table { font-size: 13px; }
-      .rc-table td, .rc-table th { padding: 10px 12px; }
+      .real-case-subtitle { font-size: 14px; }
+      .rc-comment { padding: 16px 18px; }
+      .rc-comment-quote { font-size: 13px; }
+      .rc-table { font-size: 12px; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .rc-table td, .rc-table th { padding: 8px 10px; white-space: nowrap; }
+      .rc-table td:nth-child(2), .rc-table td:nth-child(3) { white-space: normal; min-width: 120px; }
+      .rc-summary { font-size: 14px; }
+      .rc-macro { font-size: 14px; padding: 14px 16px; }
+      .trust-pill { font-size: 12px; padding: 5px 12px; }
+      .pain-card { font-size: 14px; padding: 20px; padding-left: 48px; }
+      .pain-icon { top: 20px; left: 16px; }
+      .pain-bottom { font-size: 15px; padding: 24px 20px; }
+      .about-quote { font-size: 14px; }
+      .about-story { font-size: 14px; }
+      .about-list li { font-size: 14px; }
+      .hero-title { font-size: clamp(24px, 7vw, 36px); }
+      .hero-subtitle { font-size: 14px; }
       .steps-grid { grid-template-columns: 1fr; }
       .step-card::after { display: none; }
       .about-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -1168,6 +1191,17 @@
       .btn-main, .btn-ghost { width: 100%; justify-content: center; }
       .hero-proof { flex-direction: column; gap: 16px; }
       .hero-photo-wrap { width: 160px; height: 160px; }
+      .container { padding: 0 16px; }
+      .real-case-block { padding: 20px 16px; }
+      .rc-item, .rc-arrow { font-size: 13px; }
+      .rc-group-title { font-size: 13px; }
+      .rc-comment { padding: 14px 16px; font-size: 13px; }
+      .price-card { padding: 28px 20px; }
+      .price-feat li { font-size: 13px; }
+      .faq-q { font-size: 14px; }
+      .faq-a { font-size: 13px; }
+      .float-bar { bottom: 12px; left: 12px; right: 12px; }
+      .float-bar-text { font-size: 13px; }
     }
   </style>
 </head>
@@ -1357,11 +1391,11 @@
       <!-- 면접관 코멘트 -->
       <div class="rc-comment rv">
         <h4 style="font-size:14px; font-weight:800; color:var(--text-700); margin-bottom:16px;">🔍 면접관은 이렇게 읽습니다</h4>
-        <div style="padding:16px 20px; background:var(--bg-white); border-radius:var(--radius-md); border-left:3px solid var(--coral-500); margin-bottom:20px; font-size:15px; line-height:1.8; color:var(--text-700);">
+        <div class="rc-macro">
           읽고 나면 <strong>'성실한 사람'</strong>이라는 인상은 남습니다.<br>
           그런데 <strong>'이 사람을 왜 뽑아야 하는지'</strong>는 안 남아요.
         </div>
-        <div style="font-size:13px; font-weight:600; color:var(--text-400); margin-bottom:12px;">구체적으로 보면 —</div>
+        <div class="rc-detail-label">구체적으로 보면 —</div>
         <div class="rc-comment-item">
           <div class="rc-comment-quote">"14개 매장 채용 TO 및 전반적인 관리"</div>
           그래서 뭘 한 건지 와닿지 않습니다. '관리'라는 말이 너무 넓어요.
